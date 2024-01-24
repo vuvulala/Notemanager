@@ -1,1 +1,12 @@
-{ "name": "b" }
+{
+  "name": "b123",
+  "category": "testing/nest",
+  "parts": {
+    "trompet": {
+      "1": {
+        "path": "pdfs/Priser.pdf",
+        "pages": [1, 2, 3]
+      }
+    }
+  }
+}

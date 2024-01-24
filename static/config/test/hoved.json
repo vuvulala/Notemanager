@@ -1,0 +1,12 @@
+{
+  "name": "hoved13",
+  "category": "hoved",
+  "parts": {
+    "fløyte": {
+      "1": {
+        "path": "pdfs/Priser.pdf",
+        "pages": [2, 3]
+      }
+    }
+  }
+}

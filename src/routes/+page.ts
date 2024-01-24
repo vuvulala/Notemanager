@@ -1,10 +1,7 @@
 import type { PageLoad } from "./$types";
 
-export const load: PageLoad = ({ params }) => {
-  return {
-    post: {
-      title: `Title for ${params} goes here`,
-      content: `Content for ${params} goes here`,
-    },
-  };
+
+export const load: PageLoad = async ({ fetch }) => {
+    const a = await fetch("/config");
+    return await a.json();
 };
