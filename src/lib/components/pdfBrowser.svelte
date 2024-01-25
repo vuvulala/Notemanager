@@ -79,7 +79,7 @@
             imageStyle: "width:100%; margin:0; padding:0;",
         })
     }
-
+    $: if(path) loadPDF(0)
     $: if(pages) {
         console.log("changed2", path)
         page_index = 0
@@ -88,7 +88,7 @@
         }
     }
 
-    $: if(path) loadPDF(0)
+    
 </script>
 <div class="grid">
     <div class="topnav">

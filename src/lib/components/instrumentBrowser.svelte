@@ -12,8 +12,9 @@
 
     const select_part = (inst: string, part: string) => {
         const selected_part = config.parts[inst][part]
-        pages = selected_part.pages
         path = selected_part.path
+        pages = selected_part.pages
+        
         console.log(selected_part)
         console.log("select", pages, path)
     }
