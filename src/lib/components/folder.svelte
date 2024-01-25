@@ -47,7 +47,7 @@
 
 
     .main_wrapper {
-        margin-left: 20px;
+        padding-left: 20px;
     }
 
     .closed {

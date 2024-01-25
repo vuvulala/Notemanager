@@ -34,5 +34,6 @@
     .TOP {
         display: grid;
         grid-template-columns: 25% 25% auto;
+        height: 100%;
     }
 </style>

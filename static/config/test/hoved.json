@@ -7,6 +7,12 @@
         "path": "pdfs/Priser.pdf",
         "pages": [2, 3]
       }
+    },
+    "trompet": {
+      "1": {
+        "path": "pdfs/bright side of life/trompet 1.pdf",
+        "pages": [1]
+      }
     }
   }
 }

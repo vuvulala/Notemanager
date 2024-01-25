@@ -3,7 +3,7 @@
 
     export let config: Config
 
-    export let pages = []
+    export let pages: number[] = []
     export let path = ""
 
     $: console.log("inst", config)
@@ -19,6 +19,8 @@
     }
 </script>
 
+<div class="top">
+    <h1>Stemmer</h1>
 {#each Object.keys(config.parts) as instrument_name}
 <div class="instrument">
     {instrument_name}
@@ -33,3 +35,11 @@
     </div>
 </div>
 {/each}
+</div>
+
+<style >
+    .top {
+        border-style: solid;
+        height: 100%;
+    }
+</style>

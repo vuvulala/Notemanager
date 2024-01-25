@@ -7,10 +7,14 @@ export let configs: { "configs": Config[] }
 export let selected: Config
 </script>
 
-<div>
-<Folder bind:configs={configs["configs"]} bind:selected={selected}></Folder>
+<div class="top">
+    <h1>Sang</h1>
+    <Folder bind:configs={configs["configs"]} bind:selected={selected}></Folder>
 </div>
 
 <style>
-
+    .top {
+        border-style: solid;
+        height: 100%;
+    }
 </style>
