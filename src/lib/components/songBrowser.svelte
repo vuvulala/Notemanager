@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Config } from "$lib";
-  import Folder from "./folder.svelte";
+  import Folder from "./songFolder.svelte";
 
 export let configs: { "configs": Config[] }
 
