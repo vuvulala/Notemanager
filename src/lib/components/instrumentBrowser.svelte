@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Config } from "$lib";
+  import SectionWrapper from "./sectionWrapper.svelte";
 
     export let config: Config
 
@@ -8,7 +9,7 @@
 
     $: console.log("inst", config)
 
-    $: select_part(Object.keys(config.parts)[0], Object.keys(config.parts[Object.keys(config.parts)[0]])[0])
+    //$: select_part(Object.keys(config.parts)[0], Object.keys(config.parts[Object.keys(config.parts)[0]])[0])
 
     const select_part = (inst: string, part: string) => {
         const selected_part = config.parts[inst][part]
@@ -20,43 +21,33 @@
     }
 </script>
 
-<div class="top">
-    <h1>Stemmer</h1>
-    {#each Object.keys(config.parts).toSorted() as instrument_name}
-    <div class="instrument">
-        <span>
-            {instrument_name}
-        </span>
-        <div class="part_list">
-            {#each Object.keys(config.parts[instrument_name]) as part_name}
-                <div class="part">
-                    <button on:click={() => {select_part(instrument_name, part_name)}} class="part_button">
-                    {part_name}
-                    </button>
-                </div>
-            {/each}
+<SectionWrapper title="Stemmer">
+    <div class="instrument_list">
+        {#each Object.keys(config.parts).toSorted() as instrument_name}
+        <div class="instrument">
+            <span>
+                {instrument_name}
+            </span>
+            <div class="part_list">
+                {#each Object.keys(config.parts[instrument_name]) as part_name}
+                    <div class="part">
+                        <button on:click={() => {select_part(instrument_name, part_name)}} class="part_button">
+                        {part_name}
+                        </button>
+                    </div>
+                {/each}
+            </div>
         </div>
+        {/each}
     </div>
-    {/each}
-</div>
+</SectionWrapper>
 
 <style >
-    .top h1 {
-        display: flex;
-        align-self: center;
-    }
-    .top {
-        display: flex;
-        flex-direction: column;
-        border-style: solid;
-        height: 100%;
-    }
-
-    .top > div:nth-of-type(odd) {
+    .instrument_list > div:nth-of-type(odd) {
         background: #eeeeee;
     }
 
-    .top > div:nth-of-type(even) {
+    .instrument_list > div:nth-of-type(even) {
         background: #cccccc;
     }
 
@@ -65,7 +56,8 @@
         flex-direction: row;
         justify-content: space-between;
         padding-left: 1em;
-        padding-right: 3em;
+        padding-right: 2em;
+        height: 75px;
     }
 
     .instrument span {
@@ -79,7 +71,10 @@
     }
 
     .part_button {
-        width: 3em;
-        height: 3em;
+        width: 50px;
+        height: 50px;
+        font-size: 2em;
+        text-align: center;
+        margin-left: 10px;
     }
 </style>
