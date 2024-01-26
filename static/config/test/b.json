@@ -1,6 +1,6 @@
 {
   "name": "b123",
-  "category": "testing/nest",
+  "category": "testing",
   "parts": {
     "trompet": {
       "1": {
