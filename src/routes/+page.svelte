@@ -14,7 +14,7 @@
 
     $: console.log("selected", selected)
 
-    let pages = []
+    let pages: number[] = []
     let path = ""
 </script>
 
