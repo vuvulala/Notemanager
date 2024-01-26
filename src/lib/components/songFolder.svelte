@@ -40,14 +40,14 @@
 {/if}
 <div class={`main_wrapper ${is_open || hide_top ? 'open' : 'closed'}`}>
     <div class="folder_wrapper">
-    {#each Object.keys(folders) as folder_name}
+    {#each Object.keys(folders).toSorted() as folder_name}
         <div class="folder">
             <svelte:self configs={folders[folder_name]} name={folder_name} bind:selected={selected}></svelte:self>
         </div>
     {/each}
     </div>
 <div class="line"/>
-    {#each Object.keys(files) as file_name}
+    {#each Object.keys(files).toSorted() as file_name}
     <div class="button_wrapper">
         <button on:click={() => {selected = files[file_name]}}>
             <img src="icons/music.svg" width="17px" alt="note"> {file_name}
