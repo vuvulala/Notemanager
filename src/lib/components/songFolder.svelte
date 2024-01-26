@@ -1,10 +1,12 @@
 <script lang="ts">
   import type { Config } from "$lib";
+
+  export let hide_top: boolean = false;
     export let configs: Config[]
 
     export let selected: Config
 
-    export let name: string = "TOP_LEVEL_FOLDER"
+    export let name: string = ""
 
     let is_open: boolean = false
 
@@ -29,10 +31,10 @@
     console.log("configs files", files)
 </script>
 
-{#if name !== "TOP_LEVEL_FOLDER"}
-<button on:click={() => is_open = !is_open}> <img src="icons/folder.svg" width="17px"> {name}</button>
+{#if !hide_top}
+<button on:click={() => is_open = !is_open}> <img src="icons/folder.svg" width="17px" alt="folder"> {name}</button>
 {/if}
-<div class={`main_wrapper ${is_open || (name == "TOP_LEVEL_FOLDER") ? 'open' : 'closed'}`}>
+<div class={`main_wrapper ${is_open || hide_top ? 'open' : 'closed'}`}>
     {#each Object.keys(folders) as folder_name}
         <div class="folder">
             <svelte:self configs={folders[folder_name]} name={folder_name} bind:selected={selected}></svelte:self>
