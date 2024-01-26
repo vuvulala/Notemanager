@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { GenerateError } from "$lib";
     import * as PDFJS from "pdfjs-dist";
     import type {Configuration} from "print-js"
     let printjs: (configuration: Configuration) => void;
@@ -15,7 +16,7 @@
 
     let page_index = 0
 
-    PDFJS.GlobalWorkerOptions.workerSrc = "pdfjs/pdf.worker.mjs"
+    PDFJS.GlobalWorkerOptions.workerSrc = "deps/pdfjs/pdf.worker.mjs"
     let pdf: PDFJS.PDFDocumentProxy
     async function render_page() {
         const page = await pdf.getPage(pages[page_index]);
@@ -25,6 +26,11 @@
         const viewport = page.getViewport({ scale, });
 
         const context = canvas.getContext("2d");
+        
+        if (context === null) {
+            alert(`Kunne ikke fange kontekst i ${__filename}`)
+            return
+        }
 
         canvas.height = viewport.height;
 
@@ -38,7 +44,7 @@
 
         };
 
-        await page.render(renderContext);
+        await page.render(renderContext).promise;
     }
 
     async function loadPDF(node) {
@@ -47,7 +53,7 @@
 
         pdf = await loadingTask.promise;
 
-        //await render_page()
+        await render_page()
     }
 
     async function downloadPDF() {
@@ -88,7 +94,9 @@
         }
     }
 
-    
+    onMount(() => {
+        loadPDF(0)
+    })
 </script>
 <div class="grid">
     <div class="topnav">
@@ -100,7 +108,7 @@
         }}>Forrige</button>
 
         <button on:click={downloadPDF}>SKRIV UT</button>
-        
+
         <button on:click={() => {
             if(page_index < pages.length - 1) {
                 page_index = page_index + 1
@@ -108,7 +116,7 @@
             }
         }}>Neste</button>
     </div>
-    <canvas use:loadPDF="{path}" bind:this={canvas}></canvas>
+    <canvas bind:this={canvas}></canvas>
 </div>
 
 <style>
