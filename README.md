@@ -1,38 +1,59 @@
-# create-svelte
+# Oversikt :page_facing_up:
+Dette er et program for visning / printing av noter
+Støtter følgende filtyper på noter
+- PDF
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
-## Creating a project
+# Bruk :gear:
+Programmet fungerer ved å lete gjennom filer på `/config/**/*.json`
+En config fil har følgende struktur
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+```json
+{
+  "name": "Navn på sang",
+  "category": "hva/som/helst",
+  "parts": {
+    "instrument_1": {
+      "stemme_1": {
+        "path": "sti/til/note.pdf",
+        "pages": [1]
+      },
+      "stemme_2": {
+        "path": "sti/til/note.pdf",
+        "pages": [2]
+      }
+    },
+    "instrument_2": {
+      "stemme_1": {
+        "path": "sti/til/note/stemme_1.pdf",
+        "pages": [1]
+      },
+      "stemme_2": {
+        "path": "sti/til/note/stemme_2.pdf",
+        "pages": [1]
+      }
+    }
+  }
+}
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+Dette eksempelet vil da lage en sang som heter `Navn på sang`
+denne sangen vil bli plassert i følgende mappe:
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
+hva
++-som
+| +-helst
+| | +-<sangnavn>
 ```
+**mapper blir automatisk laget basert på kategorier**
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+# Hvordan kjøre lokalt :computer:
+Alt tekst skrevet `sånn` skal kjøres i terminal (cmd, powershell, etc.)
+1. Gå til en mappe der du vil ha prosjektet, *prosjektet blir lagt i en undermappe*
+2. Kopier prosjektet inn i en ny mappe
+  `git clone https://www.github.com/vuvulala/Notemanager`
+3. Gå inn i den lagde mappen der prosjektet ligger
+  `cd Notemanager`
+4.  Installer nødvendige programmer prosjektet bruker
+  `npm install`
+5. Kjør prosjektet i utviklingsmodus
+  `npm run dev`
