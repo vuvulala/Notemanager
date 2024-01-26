@@ -6,6 +6,10 @@
       "1": {
         "path": "pdfs/Priser.pdf",
         "pages": [1, 2]
+      },
+      "2": {
+        "path": "pdfs/Priser.pdf",
+        "pages": [3]
       }
     }
   }
