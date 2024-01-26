@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { GenerateError } from "$lib";
     import * as PDFJS from "pdfjs-dist";
     import type {Configuration} from "print-js"
     let printjs: (configuration: Configuration) => void;
@@ -47,7 +46,7 @@
         await page.render(renderContext).promise;
     }
 
-    async function loadPDF(node) {
+    async function loadPDF() {
         console.log("Loading", path)
         const loadingTask = PDFJS.getDocument(path);
 
@@ -85,7 +84,7 @@
             imageStyle: "width:100%; margin:0; padding:0;",
         })
     }
-    $: if(path) loadPDF(0)
+    $: if(path) loadPDF()
     $: if(pages) {
         console.log("changed2", path)
         page_index = 0
@@ -95,7 +94,7 @@
     }
 
     onMount(() => {
-        loadPDF(0)
+        loadPDF()
     })
 </script>
 <div class="grid">
