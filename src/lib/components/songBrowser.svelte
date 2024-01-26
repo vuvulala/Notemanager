@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Config } from "$lib";
+  import { generateFolders, type Config } from "$lib";
   import Folder from "./songFolder.svelte";
   import SectionWrapper from "./sectionWrapper.svelte";
 
