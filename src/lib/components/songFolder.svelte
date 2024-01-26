@@ -32,24 +32,52 @@
 </script>
 
 {#if !hide_top}
-<button on:click={() => is_open = !is_open}> <img src="icons/folder.svg" width="17px" alt="folder"> {name}</button>
+<div class="button_wrapper">
+    <button on:click={() => is_open = !is_open}>
+        <img src="icons/folder.svg" width="17px" alt="folder"> {name}
+    </button>
+</div>
 {/if}
 <div class={`main_wrapper ${is_open || hide_top ? 'open' : 'closed'}`}>
+    <div class="folder_wrapper">
     {#each Object.keys(folders) as folder_name}
         <div class="folder">
             <svelte:self configs={folders[folder_name]} name={folder_name} bind:selected={selected}></svelte:self>
         </div>
     {/each}
-
+    </div>
+<div class="line"/>
     {#each Object.keys(files) as file_name}
-        <button on:click={() => {selected = files[file_name]}}> {file_name}</button>
+    <div class="button_wrapper">
+        <button on:click={() => {selected = files[file_name]}}>
+            <img src="icons/music.svg" width="17px" alt="note"> {file_name}
+        </button>
+    </div>
     {/each}
 </div>
 <style>
 
+    .button_wrapper {
+        height: 75px;
+        display: flex;
+        align-items: center;
+    }
+
+    .button_wrapper button {
+        height: 50px;
+    }
 
     .main_wrapper {
         padding-left: 20px;
+        border-style: solid;
+        border-width: 1px;
+    }
+
+    .line {
+        width: 100%;
+        height: 0px;
+        border-style: solid;
+        border-width: 1px;
     }
 
     .closed {
