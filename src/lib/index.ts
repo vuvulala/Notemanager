@@ -11,3 +11,12 @@ export type Config = {
         }
     }
 }
+
+export type Folder = {
+    folders: { [name: string]: Folder },
+    songs: { [name: string]: Config }
+}
+
+export function generateFolders(config_arr: Config[]): Folder {
+
+}
