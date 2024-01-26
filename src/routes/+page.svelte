@@ -2,7 +2,7 @@
     import type { PageData } from "./$types";
     export let data: PageData;
     
-  import PartBrowser from "$lib/components/fileBrowser.svelte";
+  import PartBrowser from "$lib/components/songBrowser.svelte";
   import type { Config } from "$lib";
   import PdfBrowser from "$lib/components/pdfBrowser.svelte";
   import { GlobalWorkerOptions } from "pdfjs-dist";
