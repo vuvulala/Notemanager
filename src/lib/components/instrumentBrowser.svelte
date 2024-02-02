@@ -21,7 +21,7 @@
     };
 </script>
 
-<SectionWrapper title="Stemmer">
+<SectionWrapper title={config.name}>
     <div class="instrument_list">
         {#each Object.keys(config.parts).toSorted() as instrument_name}
             <div class="instrument">

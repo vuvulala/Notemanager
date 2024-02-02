@@ -7,13 +7,24 @@
   export let configs: Config[];
 
   export let selected: Config;
+  let current: TreeFolder = {
+    files: {},
+    folders: {},
+    parent: null,
+    category_name: "",
+  };
 
-  let tree: TreeFolder = { files: {}, folders: {}, parent: null };
+  let tree: TreeFolder = {
+    files: {},
+    folders: {},
+    parent: null,
+    category_name: "",
+  };
   $: {
     tree = generateFolders(configs);
   }
 </script>
 
-<SectionWrapper title="Sang">
-  <Folder {tree} bind:selected></Folder>
+<SectionWrapper title={`sanger / ${current.category_name}`}>
+  <Folder {tree} bind:selected bind:current></Folder>
 </SectionWrapper>

@@ -4,9 +4,9 @@
 
     export let tree: TreeFolder;
 
-    let selected_node: TreeFolder = tree;
+    export let current: TreeFolder = tree;
     $: {
-        selected_node = tree;
+        current = tree;
     }
     console.log("tree", tree);
 
@@ -14,28 +14,26 @@
 </script>
 
 <div class={`main_wrapper`}>
-    {#if selected_node.parent !== null}
+    {#if current.parent !== null}
         <FolderButton
             on:click={() => {
-                if (selected_node.parent !== null)
-                    selected_node = selected_node.parent;
+                if (current.parent !== null) current = current.parent;
             }}
             icon="icons/folder.svg"
             name="..."
         ></FolderButton>
     {/if}
-    {#each Object.keys(selected_node.folders).toSorted() as folder_name}
+    {#each Object.keys(current.folders).toSorted() as folder_name}
         <FolderButton
-            on:click={() =>
-                (selected_node = selected_node.folders[folder_name])}
+            on:click={() => (current = current.folders[folder_name])}
             icon="icons/folder.svg"
             name={folder_name}
         ></FolderButton>
     {/each}
-    {#each Object.keys(selected_node.files).toSorted() as file_name}
+    {#each Object.keys(current.files).toSorted() as file_name}
         <FolderButton
             on:click={() => {
-                selected = selected_node.files[file_name];
+                selected = current.files[file_name];
             }}
             icon="icons/music.svg"
             name={file_name}

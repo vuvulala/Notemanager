@@ -130,6 +130,8 @@
 
         border-style: solid;
         height: 100%;
+
+        background-color: #f7f7f7;
     }
 
     .topnav {
