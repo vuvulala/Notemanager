@@ -1,70 +1,45 @@
 <script lang="ts">
-    import type { Config } from "$lib";
+    import FolderButton from "./FolderButton.svelte";
+    import type { Config, TreeFolder } from "$lib";
 
-    export let hide_top: boolean = false;
-    export let configs: Config[];
+    export let tree: TreeFolder;
+
+    let selected_node: TreeFolder = tree;
+    $: {
+        selected_node = tree;
+    }
+    console.log("tree", tree);
 
     export let selected: Config;
-
-    export let name: string = "";
-
-    let is_open: boolean = false;
-
-    let folders: { [key: string]: Config[] } = {};
-    let files: { [key: string]: Config } = {};
-
-    for (let conf of configs) {
-        if (conf.category === "") {
-            files[conf.name] = conf;
-            continue;
-        }
-        let obj: Config = JSON.parse(JSON.stringify(conf));
-        const split_cat = obj.category.split("/");
-        obj.category = split_cat.slice(1).join("/");
-
-        const folder_name = split_cat[0];
-        if (folders[folder_name] === undefined) {
-            folders[folder_name] = [];
-        }
-        folders[split_cat[0]].push(obj);
-    }
-
-    console.log("configs folders", folders);
-    console.log("configs files", files);
 </script>
 
-{#if !hide_top}
-    <div class="button_wrapper">
-        <button on:click={() => (is_open = !is_open)}>
-            <img src="icons/folder.svg" width="17px" alt="folder" />
-            {name}
-        </button>
-    </div>
-{/if}
-<div class={`main_wrapper ${is_open || hide_top ? "open" : "closed"}`}>
-    <div class="folder_wrapper">
-        {#each Object.keys(folders).toSorted() as folder_name}
-            <div class="folder">
-                <svelte:self
-                    configs={folders[folder_name]}
-                    name={folder_name}
-                    bind:selected
-                ></svelte:self>
-            </div>
-        {/each}
-    </div>
-    <div class="line" />
-    {#each Object.keys(files).toSorted() as file_name}
-        <div class="button_wrapper">
-            <button
-                on:click={() => {
-                    selected = files[file_name];
-                }}
-            >
-                <img src="icons/music.svg" width="17px" alt="note" />
-                {file_name}
-            </button>
-        </div>
+<div class={`main_wrapper`}>
+    {#if selected_node.parent !== null}
+        <FolderButton
+            on:click={() => {
+                if (selected_node.parent !== null)
+                    selected_node = selected_node.parent;
+            }}
+            icon="icons/folder.svg"
+            name="..."
+        ></FolderButton>
+    {/if}
+    {#each Object.keys(selected_node.folders).toSorted() as folder_name}
+        <FolderButton
+            on:click={() =>
+                (selected_node = selected_node.folders[folder_name])}
+            icon="icons/folder.svg"
+            name={folder_name}
+        ></FolderButton>
+    {/each}
+    {#each Object.keys(selected_node.files).toSorted() as file_name}
+        <FolderButton
+            on:click={() => {
+                selected = selected_node.files[file_name];
+            }}
+            icon="icons/music.svg"
+            name={file_name}
+        />
     {/each}
 </div>
 
@@ -73,10 +48,6 @@
         height: 75px;
         display: flex;
         align-items: center;
-    }
-
-    .button_wrapper button {
-        height: 50px;
     }
 
     .main_wrapper {
