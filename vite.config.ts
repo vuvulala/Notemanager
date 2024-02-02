@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [sveltekit(), topLevelAwait({})],
   server: {
     https: {
-      cert: readFileSync("cert/cert.pem"),
-      key: readFileSync("cert/key.pem"),
+      cert: readFileSync("cert/localhost.pem"),
+      key: readFileSync("cert/localhost-key.pem"),
     },
   },
 });

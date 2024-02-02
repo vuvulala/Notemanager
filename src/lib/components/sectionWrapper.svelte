@@ -1,10 +1,10 @@
 <script lang="ts">
-    export let title: string = "Untitled"
+    export let title: string = "Untitled";
 </script>
 
 <div class="top">
     <h1>{title}</h1>
-    <slot/>
+    <slot />
 </div>
 
 <style>

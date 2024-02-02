@@ -1,34 +1,33 @@
 <script lang="ts">
     import * as PDFJS from "pdfjs-dist";
-    import type {Configuration} from "print-js"
+    import type { Configuration } from "print-js";
     let printjs: (configuration: Configuration) => void;
     onMount(async () => {
-        const module = await import("print-js")
-        printjs = module.default
-    })
+        const module = await import("print-js");
+        printjs = module.default;
+    });
 
-    
-  import { onMount } from "svelte";
-    export let path: string = ""
-    export let pages: number[] = [1]
-    let canvas: HTMLCanvasElement
+    import { onMount } from "svelte";
+    export let path: string = "";
+    export let pages: number[] = [1];
+    let canvas: HTMLCanvasElement;
 
-    let page_index = 0
+    let page_index = 0;
 
-    PDFJS.GlobalWorkerOptions.workerSrc = "deps/pdfjs/pdf.worker.mjs"
-    let pdf: PDFJS.PDFDocumentProxy
+    PDFJS.GlobalWorkerOptions.workerSrc = "deps/pdfjs/pdf.worker.mjs";
+    let pdf: PDFJS.PDFDocumentProxy;
     async function render_page() {
         const page = await pdf.getPage(pages[page_index]);
 
         const scale = 1;
 
-        const viewport = page.getViewport({ scale, });
+        const viewport = page.getViewport({ scale });
 
         const context = canvas.getContext("2d");
-        
+
         if (context === null) {
-            alert(`Kunne ikke fange kontekst i ${__filename}`)
-            return
+            alert(`Kunne ikke fange kontekst i ${__filename}`);
+            return;
         }
 
         canvas.height = viewport.height;
@@ -36,84 +35,87 @@
         canvas.width = viewport.width;
 
         const renderContext = {
-
             canvasContext: context,
 
             viewport: viewport,
-
         };
 
         await page.render(renderContext).promise;
     }
 
     async function loadPDF() {
-        console.log("Loading", path)
+        console.log("Loading", path);
         const loadingTask = PDFJS.getDocument(path);
 
         pdf = await loadingTask.promise;
 
-        await render_page()
+        await render_page();
     }
 
     async function downloadPDF() {
-        
-        const images = []
-        
-        const _canvas = document.createElement("canvas")
-        const _context = _canvas.getContext("2d") as CanvasRenderingContext2D
+        const images = [];
 
-        for(let pagenr of pages) {
-            const page = await pdf.getPage(pagenr)
+        const _canvas = document.createElement("canvas");
+        const _context = _canvas.getContext("2d") as CanvasRenderingContext2D;
 
-            const viewport = page.getViewport({ scale: 4 })
+        for (let pagenr of pages) {
+            const page = await pdf.getPage(pagenr);
+
+            const viewport = page.getViewport({ scale: 4 });
 
             _canvas.height = viewport.height;
 
             _canvas.width = viewport.width;
-            
-            await page.render({
-                canvasContext: _context, viewport: viewport
-            }).promise
 
-            images.push(_canvas.toDataURL())
+            await page.render({
+                canvasContext: _context,
+                viewport: viewport,
+            }).promise;
+
+            images.push(_canvas.toDataURL());
         }
 
         printjs({
             printable: images,
             type: "image",
             imageStyle: "width:100%; margin:0; padding:0;",
-        })
+        });
     }
-    $: if(path) loadPDF()
-    $: if(pages) {
-        console.log("changed2", path)
-        page_index = 0
-        if(pdf) {
-            render_page()
+    $: if (path) loadPDF();
+    $: if (pages) {
+        console.log("changed2", path);
+        page_index = 0;
+        if (pdf) {
+            render_page();
         }
     }
 
     onMount(() => {
-        loadPDF()
-    })
+        loadPDF();
+    });
 </script>
+
 <div class="grid">
     <div class="topnav">
-        <button on:click={() => {
-            if(page_index > 0) {
-                page_index = page_index - 1
-                render_page()
-            }
-        }}>Forrige</button>
+        <button
+            on:click={() => {
+                if (page_index > 0) {
+                    page_index = page_index - 1;
+                    render_page();
+                }
+            }}>Forrige</button
+        >
 
         <button on:click={downloadPDF}>SKRIV UT</button>
 
-        <button on:click={() => {
-            if(page_index < pages.length - 1) {
-                page_index = page_index + 1
-                render_page()
-            }
-        }}>Neste</button>
+        <button
+            on:click={() => {
+                if (page_index < pages.length - 1) {
+                    page_index = page_index + 1;
+                    render_page();
+                }
+            }}>Neste</button
+        >
     </div>
     <canvas bind:this={canvas}></canvas>
 </div>
@@ -131,7 +133,7 @@
     }
 
     .topnav {
-        display:flex;
+        display: flex;
         flex-direction: row;
         justify-content: space-around;
     }
