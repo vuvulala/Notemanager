@@ -20,7 +20,7 @@
 
 <div class="TOP">
     <div>
-        <PartBrowser bind:configs={data} bind:selected />
+        <PartBrowser bind:configs={data["configs"]} bind:selected />
     </div>
     <div>
         <InstrumentBrowser config={selected} bind:pages bind:path
